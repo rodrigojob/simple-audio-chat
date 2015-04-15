@@ -1,15 +1,9 @@
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.FieldPosition;
 import java.util.Scanner;
 
-import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 import javax.sound.sampled.AudioFormat.Encoding;
 import javax.sound.sampled.DataLine;
@@ -36,40 +30,23 @@ public class SimpleVideoChat {
 		return false;
 	}
 
-	// public void testRecording() {
-	// try {
-	// System.out.println("Start recoriding");
-	// targetLine.start();
-	//
-	// Runner runner = new Runner(targetLine);
-	// runner.start();
-	// Thread.sleep(5000);
-	// targetLine.stop();
-	// targetLine.close();
-	// System.out.println("Thread ended");
-	// }
-	//
-	// catch (InterruptedException e) {
-	// e.printStackTrace();
-	// }
-	// }
-
 	public void openStream(InputStream is, OutputStream os) {
 		System.out.println("inputstream and output stream fetched");
 
-		GetRunner getrunner = new GetRunner(is);
-		Runner runner = new Runner(targetLine, os);
+		GetMicThread gmt = new GetMicThread(is);
+		SendMicThread smt = new SendMicThread(targetLine, os);
 
 		try {
-			getrunner.start();
-			runner.start();
-			Thread.sleep(5000);
+			gmt.start();
+			smt.start();
+			Thread.sleep(50000);
 			System.exit(1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		System.out.print("Accept connections on (port): ");
 		Scanner scan = new Scanner(System.in);
@@ -91,6 +68,6 @@ public class SimpleVideoChat {
 		Scanner scan3 = new Scanner(System.in);
 		int port2 = scan3.nextInt();
 
-		Client client = new Client(port, address, svc);
+		Client client = new Client(port2, address, svc);
 	}
 }

@@ -6,10 +6,8 @@ import java.net.Socket;
 
 public class Server extends Thread {
 
-	int port;
-	boolean connected = false;
-	OutputStream os;
-	SimpleVideoChat svc;
+	private int port;
+	private SimpleVideoChat svc;
 
 	public Server(int port, SimpleVideoChat svc) {
 		this.port = port;
@@ -43,7 +41,7 @@ public class Server extends Thread {
 						+ socket.getPort() + ". Local port: "
 						+ socket.getLocalPort());
 				InputStream is = socket.getInputStream();
-				os = socket.getOutputStream();
+				OutputStream os = socket.getOutputStream();
 				svc.openStream(is, os);
 
 			} catch (IOException e) {
