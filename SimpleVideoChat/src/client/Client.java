@@ -14,12 +14,6 @@ public class Client {
 			System.out.println(e);
 			System.exit(1);
 		}
-		try {
-			socket.close();
-		} catch (IOException e) {
-			System.out.println(e);
-			System.exit(1);
-		}
 	}
 
 }

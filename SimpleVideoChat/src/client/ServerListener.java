@@ -32,10 +32,9 @@ public class ServerListener extends Thread {
 					s = new String(messageArray, "UTF-8");
 
 					if (s.startsWith("get:")) {
-						int i = s.indexOf('|');
-						String address = s.substring(5, i);
-						int port = Integer.parseInt(s.substring(i + 1));
-						svc.start(port, address);
+						String address = s.substring(4);
+						System.out.println(address);
+						svc.start(30000, address);
 					} else if (s.startsWith("update:")) {
 						String listString = s.substring(7);
 						ArrayList<String> list = new ArrayList<String>(

@@ -39,11 +39,6 @@ public class Server extends Thread {
 					+ socket.getPort() + ". Local port: "
 					+ socket.getLocalPort());
 			svc.openStream(socket);
-			try {
-				socket.close();
-			} catch (IOException e) {
-				System.out.println(e);
-			}
 		}
 	}
 }

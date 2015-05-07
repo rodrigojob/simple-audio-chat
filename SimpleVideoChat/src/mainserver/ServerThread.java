@@ -1,4 +1,5 @@
 package mainserver;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -34,7 +35,7 @@ public class ServerThread extends Thread {
 						ms.addConnection(s, socket);
 					} else if (message.startsWith("get:")) {
 						String s = message.substring(4, length);
-						String ip = ms.getUser(s);
+						String ip = "get:" + ms.getUser(s);
 						os.write(ip.getBytes());
 					} else if (message.startsWith("quit:")) {
 						String s = message.substring(5, length);

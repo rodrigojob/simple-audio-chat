@@ -29,7 +29,7 @@ public class MainServer {
 	public synchronized String getUser(String userName) {
 		socket = connections.get(userName);
 
-		String ip = socket.getInetAddress().toString();
+		String ip = socket.getInetAddress().getHostAddress();
 
 		return ip;
 	}
