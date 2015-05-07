@@ -1,4 +1,4 @@
-import java.util.concurrent.TimeUnit;
+package mainserver;
 
 public class ServerUpdate extends Thread {
 	MainServer ms;
@@ -10,8 +10,7 @@ public class ServerUpdate extends Thread {
 	public void run() {
 		while (true) {
 			try {
-				Thread.sleep(5000);
-				System.out.println("Hej");
+				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

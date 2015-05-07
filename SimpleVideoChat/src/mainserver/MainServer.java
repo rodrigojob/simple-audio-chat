@@ -1,7 +1,10 @@
+package mainserver;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -35,22 +38,22 @@ public class MainServer {
 		String s = "";
 		for (Entry<String, Socket> entry : connections.entrySet()) {
 			String userName = entry.getKey();
-			Socket socket = entry.getValue();
-			if (!socket.isConnected()) {
-				removeConnections(userName);
-			}
-			s += ",";
 			s += userName;
+			s += ",";
 		}
+		System.out.println(s);
 		return s;
 	}
 
 	public synchronized void usersOnline(String s) {
 		for (Entry<String, Socket> entry : connections.entrySet()) {
 			Socket socket = entry.getValue();
+			String update = "update:" + s;
 			try {
 				os = socket.getOutputStream();
-				os.write(s.getBytes());
+				os.write(update.getBytes());
+			} catch (SocketException e) {
+				removeConnections(entry.getKey());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

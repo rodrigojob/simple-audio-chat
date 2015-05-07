@@ -1,3 +1,4 @@
+package client;
 import java.net.Socket;
 import java.util.ArrayList;
 

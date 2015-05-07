@@ -1,10 +1,11 @@
+package mainserver;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ConnectionListener {
+public class ConnectionListener extends Thread {
 	MainServer ms;
 
 	public ConnectionListener(MainServer ms) {
@@ -15,14 +16,13 @@ public class ConnectionListener {
 	public void run() {
 		ServerSocket server = null;
 		try {
-			server = new ServerSocket(30000);
+			server = new ServerSocket(40000);
 		} catch (IOException e) {
 			System.out.println(e);
 			System.exit(1);
 		}
 
 		ExecutorService service = Executors.newFixedThreadPool(5);
-		ExecutorService service2 = Executors.newFixedThreadPool(5);
 
 		while (true) {
 			Socket socket = null;
@@ -39,15 +39,16 @@ public class ConnectionListener {
 
 			ServerThread runner = new ServerThread(socket, ms);
 			service.submit(runner);
-			
-			ServerUpdate su = new ServerUpdate(ms);
-			service2.submit(su);
 
 		}
 	}
 	
 	public static void main(String args[]){
 		MainServer ms = new MainServer();
+		ServerUpdate su = new ServerUpdate(ms);
+		su.start();
 		ConnectionListener cl = new ConnectionListener(ms);
+		cl.start();
+		
 	}
 }

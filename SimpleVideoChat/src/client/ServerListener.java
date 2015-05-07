@@ -1,6 +1,7 @@
+package client;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +22,6 @@ public class ServerListener extends Thread {
 	public void run() {
 		try {
 			InputStream is = socket.getInputStream();
-			OutputStream os = socket.getOutputStream();
 			while (true) {
 				int length = -1;
 				byte[] buffer = new byte[1024];
@@ -37,7 +37,7 @@ public class ServerListener extends Thread {
 						int port = Integer.parseInt(s.substring(i + 1));
 						svc.start(port, address);
 					} else if (s.startsWith("update:")) {
-						String listString = s.substring(8);
+						String listString = s.substring(7);
 						ArrayList<String> list = new ArrayList<String>(
 								Arrays.asList(listString.split(",")));
 						gui.updateList(list);

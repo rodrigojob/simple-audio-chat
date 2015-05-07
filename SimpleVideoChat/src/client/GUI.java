@@ -1,3 +1,4 @@
+package client;
 import java.awt.EventQueue;
 import java.io.IOException;
 import java.net.Socket;
@@ -49,13 +50,7 @@ public class GUI {
 					System.out.println(e);
 					System.exit(1);
 				}
-				try {
-					socket.close();
-				} catch (IOException e) {
-					System.out.println(e);
-					System.exit(1);
-				}
-
+				
 				GUI gui = new GUI(socket, username);
 				gui.frame.setVisible(true);
 
