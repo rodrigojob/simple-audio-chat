@@ -1,6 +1,5 @@
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Scanner;
+import java.net.Socket;
+import java.util.ArrayList;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
@@ -11,6 +10,8 @@ import javax.sound.sampled.DataLine;
 public class SimpleVideoChat {
 
 	static TargetDataLine targetLine;
+	private boolean terminate = false;
+	private Client client;
 
 	public boolean soundCheck() {
 		try {
@@ -30,44 +31,30 @@ public class SimpleVideoChat {
 		return false;
 	}
 
-	public void openStream(InputStream is, OutputStream os) {
+	public void openStream(Socket socket) {
 		System.out.println("inputstream and output stream fetched");
 
-		GetMicThread gmt = new GetMicThread(is);
-		SendMicThread smt = new SendMicThread(targetLine, os);
+		GetMicThread gmt = new GetMicThread(socket, this);
+		SendMicThread smt = new SendMicThread(targetLine, socket, this);
 
-		try {
-			gmt.start();
-			smt.start();
-			Thread.sleep(50000);
-			System.exit(1);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		gmt.start();
+		smt.start();
 	}
 
-	@SuppressWarnings("resource")
-	public static void main(String[] args) {
-		System.out.print("Accept connections on (port): ");
-		Scanner scan = new Scanner(System.in);
-		int port = scan.nextInt();
+	public void start(int port, String address) {
+		terminate = false;
+		client = new Client(port, address, this);
+	}
+	
+	public void stop(){
+		terminate = true;
+	}
 
-		SimpleVideoChat svc = new SimpleVideoChat();
-		Server server = new Server(port, svc);
-		if (svc.soundCheck()) {
-			server.start();
-		} else {
-			System.out.println("No sound input detected.");
-			System.exit(1);
-		}
-		System.out.print("Connect to (Address): ");
-		Scanner scan2 = new Scanner(System.in);
-		String address = scan2.next();
+	public boolean terminate() {
+		return terminate;
+	}
 
-		System.out.print("Connect to (port): ");
-		Scanner scan3 = new Scanner(System.in);
-		int port2 = scan3.nextInt();
-
-		Client client = new Client(port2, address, svc);
+	public void setTerminate(boolean b) {
+		terminate = b;
 	}
 }

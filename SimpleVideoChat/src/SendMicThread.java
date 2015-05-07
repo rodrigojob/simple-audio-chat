@@ -1,4 +1,5 @@
 import java.io.OutputStream;
+import java.net.Socket;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
@@ -8,16 +9,20 @@ import javax.sound.sampled.TargetDataLine;
 public class SendMicThread extends Thread {
 
 	private TargetDataLine targetLine;
-	private OutputStream os;
+	private Socket socket;
+	private SimpleVideoChat svc;
 
-	public SendMicThread(TargetDataLine targetLine, OutputStream os) {
+	public SendMicThread(TargetDataLine targetLine, Socket socket,
+			SimpleVideoChat svc) {
 		this.targetLine = targetLine;
-		this.os = os;
+		this.socket = socket;
+		this.svc = svc;
 	}
 
 	@Override
 	public void run() {
 		try {
+			OutputStream os = socket.getOutputStream();
 			AudioFormat format = new AudioFormat(16000, 8, 2, true, true);
 			targetLine = AudioSystem.getTargetDataLine(format);
 
@@ -29,6 +34,9 @@ public class SendMicThread extends Thread {
 			int n = 0;
 			while ((n = targetLine.read(buffer, 0, 1024)) > 0) {
 				os.write(buffer, 0, n);
+				if (svc.terminate()) {
+					return;
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

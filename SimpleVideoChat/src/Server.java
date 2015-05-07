@@ -1,6 +1,4 @@
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -35,18 +33,11 @@ public class Server extends Thread {
 				System.out.println(e);
 				System.exit(1);
 			}
-			try {
-				System.out.println("New connection from "
-						+ socket.getInetAddress().getHostName() + ":"
-						+ socket.getPort() + ". Local port: "
-						+ socket.getLocalPort());
-				InputStream is = socket.getInputStream();
-				OutputStream os = socket.getOutputStream();
-				svc.openStream(is, os);
-
-			} catch (IOException e) {
-				System.out.println(e);
-			}
+			System.out.println("New connection from "
+					+ socket.getInetAddress().getHostName() + ":"
+					+ socket.getPort() + ". Local port: "
+					+ socket.getLocalPort());
+			svc.openStream(socket);
 			try {
 				socket.close();
 			} catch (IOException e) {
