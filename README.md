@@ -1,6 +1,6 @@
 # SimpleAudioChat
 
-![alt tag](https://raw.github.com/NiclasLovdahl/SimpleAudioChat/blob/master/SimpleAudioChat.tiff)
+![alt tag](https://github.com/NiclasLovdahl/SimpleAudioChat/raw/master/SimpleAudioChat.tiff)
 
 The goal of this project is to create a P2P audio live streaming application.
 
