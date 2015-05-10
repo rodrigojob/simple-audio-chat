@@ -1,4 +1,4 @@
-# SimpleVideoChat
+# SimpleAudioChat
 The goal of this project is to create a P2P audio live streaming application.
 
 ## Goals
