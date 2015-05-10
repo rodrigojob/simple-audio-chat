@@ -1,7 +1,7 @@
 package client;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
@@ -9,15 +9,17 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.TargetDataLine;
 
-public class GetMicThread extends Thread {
+public class SendMicThread extends Thread {
 
+	private TargetDataLine targetLine;
 	private Socket socket;
-	private SourceDataLine speakers;
-	private SimpleVideoChat svc;
+	private SimpleAudioChat svc;
 
-	public GetMicThread(Socket socket, SimpleVideoChat svc) {
+	public SendMicThread(TargetDataLine targetLine, Socket socket,
+			SimpleAudioChat svc) {
+		this.targetLine = targetLine;
 		this.socket = socket;
 		this.svc = svc;
 	}
@@ -25,18 +27,18 @@ public class GetMicThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			InputStream is = socket.getInputStream();
+			OutputStream os = socket.getOutputStream();
 			AudioFormat format = new AudioFormat(16000, 8, 2, true, true);
-			DataLine.Info dataLineInfo = new DataLine.Info(
-					SourceDataLine.class, format);
-			speakers = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
-			speakers.open(format);
-			speakers.start();
-			byte[] buffer = new byte[1024];
-			int n;
+			targetLine = AudioSystem.getTargetDataLine(format);
 
-			while ((n = is.read(buffer)) > 0) {
-				speakers.write(buffer, 0, n);
+			DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
+			targetLine = (TargetDataLine) AudioSystem.getLine(info);
+			targetLine.open(format);
+			targetLine.start();
+			byte[] buffer = new byte[1024];
+			int n = 0;
+			while ((n = targetLine.read(buffer, 0, 1024)) > 0) {
+				os.write(buffer, 0, n);
 				if (svc.terminate()) {
 					socket.close();
 					return;
@@ -54,6 +56,5 @@ public class GetMicThread extends Thread {
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
-
 	}
 }

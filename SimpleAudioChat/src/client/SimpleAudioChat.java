@@ -8,7 +8,7 @@ import javax.sound.sampled.TargetDataLine;
 import javax.sound.sampled.AudioFormat.Encoding;
 import javax.sound.sampled.DataLine;
 
-public class SimpleVideoChat {
+public class SimpleAudioChat {
 
 	static TargetDataLine targetLine;
 	private boolean terminate = false;

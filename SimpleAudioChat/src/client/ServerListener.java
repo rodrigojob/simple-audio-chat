@@ -9,10 +9,10 @@ import java.util.Arrays;
 public class ServerListener extends Thread {
 
 	private Socket socket;
-	private SimpleVideoChat svc;
+	private SimpleAudioChat svc;
 	private GUI gui;
 
-	public ServerListener(Socket s, SimpleVideoChat svc, GUI gui) {
+	public ServerListener(Socket s, SimpleAudioChat svc, GUI gui) {
 		this.socket = s;
 		this.svc = svc;
 		this.gui = gui;

@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 
 public class HangUpButton implements ActionListener {
 
-	SimpleVideoChat svc;
+	SimpleAudioChat svc;
 
-	public HangUpButton(SimpleVideoChat svc) {
+	public HangUpButton(SimpleAudioChat svc) {
 		this.svc = svc;
 	}
 

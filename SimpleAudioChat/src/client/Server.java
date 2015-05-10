@@ -7,9 +7,9 @@ import java.net.Socket;
 public class Server extends Thread {
 
 	private int port;
-	private SimpleVideoChat svc;
+	private SimpleAudioChat svc;
 
-	public Server(int port, SimpleVideoChat svc) {
+	public Server(int port, SimpleAudioChat svc) {
 		this.port = port;
 		this.svc = svc;
 	}

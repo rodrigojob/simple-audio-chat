@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 
 public class QuitButton implements ActionListener {
 
-	SimpleVideoChat svc;
+	SimpleAudioChat svc;
 
-	public QuitButton(SimpleVideoChat svc) {
+	public QuitButton(SimpleAudioChat svc) {
 		this.svc = svc;
 	}
 

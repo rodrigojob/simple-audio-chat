@@ -1,7 +1,7 @@
 package client;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
@@ -9,17 +9,15 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.TargetDataLine;
+import javax.sound.sampled.SourceDataLine;
 
-public class SendMicThread extends Thread {
+public class GetMicThread extends Thread {
 
-	private TargetDataLine targetLine;
 	private Socket socket;
-	private SimpleVideoChat svc;
+	private SourceDataLine speakers;
+	private SimpleAudioChat svc;
 
-	public SendMicThread(TargetDataLine targetLine, Socket socket,
-			SimpleVideoChat svc) {
-		this.targetLine = targetLine;
+	public GetMicThread(Socket socket, SimpleAudioChat svc) {
 		this.socket = socket;
 		this.svc = svc;
 	}
@@ -27,18 +25,18 @@ public class SendMicThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			OutputStream os = socket.getOutputStream();
+			InputStream is = socket.getInputStream();
 			AudioFormat format = new AudioFormat(16000, 8, 2, true, true);
-			targetLine = AudioSystem.getTargetDataLine(format);
-
-			DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
-			targetLine = (TargetDataLine) AudioSystem.getLine(info);
-			targetLine.open(format);
-			targetLine.start();
+			DataLine.Info dataLineInfo = new DataLine.Info(
+					SourceDataLine.class, format);
+			speakers = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
+			speakers.open(format);
+			speakers.start();
 			byte[] buffer = new byte[1024];
-			int n = 0;
-			while ((n = targetLine.read(buffer, 0, 1024)) > 0) {
-				os.write(buffer, 0, n);
+			int n;
+
+			while ((n = is.read(buffer)) > 0) {
+				speakers.write(buffer, 0, n);
 				if (svc.terminate()) {
 					socket.close();
 					return;
@@ -56,5 +54,6 @@ public class SendMicThread extends Thread {
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
+
 	}
 }

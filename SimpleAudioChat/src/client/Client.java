@@ -7,9 +7,9 @@ public class Client {
 
 	int port;
 	String address;
-	SimpleVideoChat svc;
+	SimpleAudioChat svc;
 
-	public Client(int port, String address, SimpleVideoChat svc) {
+	public Client(int port, String address, SimpleAudioChat svc) {
 		this.port = port;
 		this.address = address;
 		this.svc = svc;

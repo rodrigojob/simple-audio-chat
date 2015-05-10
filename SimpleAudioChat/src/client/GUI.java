@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 
 public class GUI {
 
-	private SimpleVideoChat svc;
+	private SimpleAudioChat svc;
 	private JFrame frame;
 	private JList<String> jlist;
 	private Socket socket;
@@ -31,7 +31,7 @@ public class GUI {
 				String username = JOptionPane
 						.showInputDialog("Input username:");
 
-				SimpleVideoChat svc = new SimpleVideoChat();
+				SimpleAudioChat svc = new SimpleAudioChat();
 				// INSERT INCOMMING PORT HERE //
 				Server server = new Server(30000, svc);
 				if (svc.soundCheck()) {
@@ -65,7 +65,7 @@ public class GUI {
 	/**
 	 * Create the application.
 	 */
-	public GUI(Socket socket, String username, SimpleVideoChat svc) {
+	public GUI(Socket socket, String username, SimpleAudioChat svc) {
 		this.svc = svc;
 		this.socket = socket;
 		this.username = username;
