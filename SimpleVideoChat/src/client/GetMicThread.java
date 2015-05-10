@@ -45,6 +45,7 @@ public class GetMicThread extends Thread {
 		} catch (SocketException e) {
 			try {
 				socket.close();
+				svc.stop();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

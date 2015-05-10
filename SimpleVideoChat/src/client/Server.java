@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import javax.swing.JOptionPane;
-
 public class Server extends Thread {
 
 	private int port;
@@ -41,18 +39,18 @@ public class Server extends Thread {
 					+ socket.getInetAddress().getHostName() + ":"
 					+ socket.getPort() + ". Local port: "
 					+ socket.getLocalPort());
-			int i = JOptionPane.showConfirmDialog(null,
-					"Answer incomming call?", "Incomming call",
-					JOptionPane.YES_NO_OPTION);
-			if (i == JOptionPane.YES_OPTION) {
-				svc.openStream(socket);
-			} else {
-				try {
-					socket.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+			// int i = JOptionPane.showConfirmDialog(null,
+			// "Answer incomming call?", "Incomming call",
+			// JOptionPane.YES_NO_OPTION);
+			// if (i == JOptionPane.YES_OPTION) {
+			svc.openStream(socket);
+			// } else {
+			// try {
+			// socket.close();
+			// } catch (IOException e) {
+			// e.printStackTrace();
+			// }
+			// }
 		}
 	}
 }
