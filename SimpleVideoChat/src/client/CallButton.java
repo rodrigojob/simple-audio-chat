@@ -1,4 +1,5 @@
 package client;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -21,14 +22,13 @@ public class CallButton implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (list.isSelectionEmpty()) {
 			JOptionPane.showMessageDialog(null, "Select a user.");
-			return;
+		} else {
+			String s = "get:" + list.getSelectedValue().toString();
+			try {
+				socket.getOutputStream().write(s.getBytes());
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
-		String s = "get:" + list.getSelectedValue().toString();
-		try {
-			socket.getOutputStream().write(s.getBytes());
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-
 	}
 }

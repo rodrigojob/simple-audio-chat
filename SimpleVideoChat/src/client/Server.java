@@ -1,7 +1,10 @@
 package client;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import javax.swing.JOptionPane;
 
 public class Server extends Thread {
 
@@ -38,7 +41,17 @@ public class Server extends Thread {
 					+ socket.getInetAddress().getHostName() + ":"
 					+ socket.getPort() + ". Local port: "
 					+ socket.getLocalPort());
-			svc.openStream(socket);
+			int i = JOptionPane.showConfirmDialog(null, "Are you sure?",
+					"WARNING", JOptionPane.YES_NO_OPTION);
+			if (i == 1) {
+				svc.openStream(socket);
+			} else {
+				try {
+					socket.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }

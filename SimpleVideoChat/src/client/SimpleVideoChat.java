@@ -1,6 +1,6 @@
 package client;
+
 import java.net.Socket;
-import java.util.ArrayList;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
@@ -45,9 +45,10 @@ public class SimpleVideoChat {
 	public void start(int port, String address) {
 		terminate = false;
 		client = new Client(port, address, this);
+		client.run();
 	}
-	
-	public void stop(){
+
+	public void stop() {
 		terminate = true;
 	}
 

@@ -41,7 +41,6 @@ public class MainServer {
 			s += userName;
 			s += ",";
 		}
-		System.out.println(s);
 		return s;
 	}
 

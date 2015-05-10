@@ -22,7 +22,6 @@ public class MicClient {
 	}
 
 	public void receive() throws Exception {
-        int bytesRead = 0;
 		InputStream in = socket.getInputStream();
 		AudioFormat format = new AudioFormat(16000, 8, 2, true, true);
         DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, format);

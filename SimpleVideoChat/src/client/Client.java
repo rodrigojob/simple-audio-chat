@@ -1,11 +1,21 @@
 package client;
+
 import java.io.IOException;
 import java.net.Socket;
 
 public class Client {
 
-	public Client(int port, String address, SimpleVideoChat svc) {
+	int port;
+	String address;
+	SimpleVideoChat svc;
 
+	public Client(int port, String address, SimpleVideoChat svc) {
+		this.port = port;
+		this.address = address;
+		this.svc = svc;
+	}
+
+	public void run() {
 		Socket socket = null;
 		try {
 			socket = new Socket(address, port);

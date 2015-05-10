@@ -1,4 +1,5 @@
 package client;
+
 import java.awt.EventQueue;
 import java.io.IOException;
 import java.net.Socket;
@@ -14,6 +15,7 @@ import javax.swing.SwingConstants;
 
 public class GUI {
 
+	private SimpleVideoChat svc;
 	private JFrame frame;
 	private JList<String> jlist;
 	private Socket socket;
@@ -43,15 +45,15 @@ public class GUI {
 				Socket socket = null;
 				try {
 					// INSERT MASTER SERVER IP AND PORT HERE //
-					socket = new Socket("192.168.0.17", 40000);
+					socket = new Socket("192.168.1.65", 40000);
 					String s = "username:" + username;
 					socket.getOutputStream().write(s.getBytes());
 				} catch (IOException e) {
 					System.out.println(e);
 					System.exit(1);
 				}
-				
-				GUI gui = new GUI(socket, username);
+
+				GUI gui = new GUI(socket, username, svc);
 				gui.frame.setVisible(true);
 
 				ServerListener sl = new ServerListener(socket, svc, gui);
@@ -63,7 +65,8 @@ public class GUI {
 	/**
 	 * Create the application.
 	 */
-	public GUI(Socket socket, String username) {
+	public GUI(Socket socket, String username, SimpleVideoChat svc) {
+		this.svc = svc;
 		this.socket = socket;
 		this.username = username;
 		initialize();
@@ -76,7 +79,7 @@ public class GUI {
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		jlist = new JList<String>();
@@ -95,10 +98,12 @@ public class GUI {
 		JButton btnHangUp = new JButton("Hang up");
 		btnHangUp.setBounds(290, 176, 117, 29);
 		frame.getContentPane().add(btnHangUp);
+		btnHangUp.addActionListener(new HangUpButton(svc));
 
 		JButton btnQuit = new JButton("Quit");
 		btnQuit.setBounds(290, 217, 117, 29);
 		frame.getContentPane().add(btnQuit);
+		btnQuit.addActionListener(new QuitButton(svc));
 
 		JLabel lblYourUsernameIs = new JLabel("Your username is:");
 		lblYourUsernameIs.setBounds(290, 32, 125, 16);

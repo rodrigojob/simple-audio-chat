@@ -1,11 +1,14 @@
 package client;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 
 public class SendMicThread extends Thread {
@@ -37,12 +40,20 @@ public class SendMicThread extends Thread {
 			while ((n = targetLine.read(buffer, 0, 1024)) > 0) {
 				os.write(buffer, 0, n);
 				if (svc.terminate()) {
+					socket.close();
 					return;
 				}
 			}
-		} catch (Exception e) {
+		} catch (SocketException e) {
+			try {
+				socket.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
-
 	}
 }
