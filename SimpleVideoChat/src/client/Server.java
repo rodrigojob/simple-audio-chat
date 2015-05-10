@@ -41,9 +41,10 @@ public class Server extends Thread {
 					+ socket.getInetAddress().getHostName() + ":"
 					+ socket.getPort() + ". Local port: "
 					+ socket.getLocalPort());
-			int i = JOptionPane.showConfirmDialog(null, "Are you sure?",
-					"WARNING", JOptionPane.YES_NO_OPTION);
-			if (i == 1) {
+			int i = JOptionPane.showConfirmDialog(null,
+					"Answer incomming call?", "Incomming call",
+					JOptionPane.YES_NO_OPTION);
+			if (i == JOptionPane.YES_OPTION) {
 				svc.openStream(socket);
 			} else {
 				try {
