@@ -4,8 +4,6 @@
 
 The goal of this project is to create a P2P audio live streaming application.
 
-[Website](http://davidjaenson.github.io/simple-audio-chat/)
-
 ## Goals
 1. ~~Create a application accepting and sending connection requests.~~
 2. ~~Live audio duplex stream.~~
