@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="bootstrap/bootstrap.min.css" type="text/css" />
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <h3 style="margin-top: 10px;padding:0px;"><a href="index.html"><i>SimpleAudioChat</i></a></h3>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.html">
+                        <span class='glyphicon glyphicon-th-list'></span>
+                        Hem
+                    </a></li>
+                    <li><a href="download.html">
+                        <span class='glyphicon glyphicon-download'></span>
+                        Ladda Ned
+                    </a></li>
+                    <li><a href="manual.html">
+                        <span class='glyphicon glyphicon-info-sign'></span>
+                        Protokoll
+                    </a></li>
+                    <li><a href="about.html">
+                        <span class='glyphicon glyphicon-user'></span>
+                        Om
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container" id="wrap">
+            <h1>Protocol</h1>
+            <div class="row bg-default text-center">
+                <p>
+                    <h3>Nedan visas ett exempel på en session av SimpleAudioChat</h3>
+                    <img src="img/protocol.png" />
+                    <ul style="width: 50%;margin-left:25%;" class="text-left">
+                        <li>Först ansluter klient A till mötesservern över TCP</li>
+                        <li>Därefter ansluter klient B till mötesservern över TCP</li>
+                        <li>Varje sekund skickar mötesservern listan av anslutna klientnamn till alla klienter</li>
+                        <li>Klient B frågar mötesservern vilken IP som klient A har</li>
+                        <li>Mötesservern svarar med klient A:s IP-adress</li>
+                        <li>Klient B ansluter till klient A över TCP på port 30000</li>
+                        <li>Klient A och B börjar skicka och mottaga okomprimerat WAV-ljud</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </body>'
+</html>
