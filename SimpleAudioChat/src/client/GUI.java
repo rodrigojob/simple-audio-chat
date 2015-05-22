@@ -45,7 +45,7 @@ public class GUI {
 				Socket socket = null;
 				try {
 					// INSERT MASTER SERVER IP AND PORT HERE //
-					socket = new Socket("192.168.1.65", 40000);
+					socket = new Socket("178.62.196.175", 40000);
 					String s = "username:" + username;
 					socket.getOutputStream().write(s.getBytes());
 				} catch (IOException e) {
